@@ -42,10 +42,11 @@ function loadCountries() {
     });
 }
 
-function createMoreInfoModal(value, name=false, full_name=false, code=false, currency=false) {
+function createMoreInfoModal(value, name=false, full_name=false, code=false, language=false, currency=false) {
     let modalHTML = document.getElementById("modalMoreInfo");
     
-    let url = name ? "https://restcountries.com/v3.1/name/" + value
+    let url = name ? `https://restcountries.com/v3.1/name/${value}` 
+     : language ? `https://restcountries.com/v3.1/lang/${value}`
      : full_name ? `https://restcountries.com/v3.1/name/${value}?fullText` 
      : code ? `https://restcountries.com/v3.1/alpha/${value}` 
      :  currency ? `https://restcountries.com/v3.1/currency/${value}`
@@ -95,29 +96,116 @@ function createMoreInfoModal(value, name=false, full_name=false, code=false, cur
 
 }
 
+let values = {
+    name: true, // Default on load
+    full_name: false,
+    code: false,
+    language: false,
+    currency: false
+}
+
 function search() {
     let searchInput = document.getElementById("searchTextInput");
 
-    createMoreInfoModal(searchInput.value, name=true);
+    console.log(Object.values(values));
+    
+
+    createMoreInfoModal(searchInput.value, ...Object.values(values));
 
 }
 
 function setValues(value_type) {
+    let dropDown = document.getElementById("dropDown");
+    let searchInput = document.getElementById("searchTextInput");
+
+
     switch (value_type) {
         case "name":
-            
+            values.name = true;
+
+            for (const key in values) {
+                if (Object.prototype.hasOwnProperty.call(values, key)) {
+                    if (key !== "name") {
+                        values[key] = false;
+                    }
+                    
+                }
+            }
+
+            searchInput.placeholder = "Enter country name";
+            dropDown.innerText = "Name";
+
             break;
     
         case "full_name":
+            values.full_name = true;
+
+            for (const key in values) {
+                if (Object.prototype.hasOwnProperty.call(values, key)) {
+                    if (key !== "full_name") {
+                        values[key] = false;
+                    }
+                    
+                }
+            }
+
+            searchInput.placeholder = "Enter country full name";
+            dropDown.innerText = "Country Full Name";
+
             break;
 
         case "code":
+            values.code = true;
+
+            for (const key in values) {
+                if (Object.prototype.hasOwnProperty.call(values, key)) {
+                    if (key !== "code") {
+                        values[key] = false;
+                    }
+                    
+                }
+            }
+
+            searchInput.placeholder = "Enter country code";
+            dropDown.innerText = "Country Code";
+
+
+
             break;
 
         case "language":
+            values.language = true;
+
+            for (const key in values) {
+                if (Object.prototype.hasOwnProperty.call(values, key)) {
+                    if (key !== "language") {
+                        values[key] = false;
+                    }
+                    
+                }
+            }
+
+            searchInput.placeholder = "Enter country language";
+            dropDown.innerText = "Language";
+
+
             break;
 
         case "currency":
+            values.currency = true;
+
+            for (const key in values) {
+                if (Object.prototype.hasOwnProperty.call(values, key)) {
+                    if (key !== "currency") {
+                        values[key] = false;
+                    }
+                    
+                }
+            }
+
+            searchInput.placeholder = "Enter country currency";
+            dropDown.innerText = "Currency";
+
             break;
         
         default:

@@ -5,4 +5,39 @@
     border-style: solid;
     padding: 5px;
     
-  }
+}
+
+.modal-bg {
+  background-image: var(--url);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  color: white; 
+  overflow: hidden; 
+}
+
+.modal-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+
+  z-index: -1;
+  opacity: 0.9; 
+}
+
+
+.overlay {
+  content: "";
+
+
+  background-color: rgba(0, 0, 0, 0.5);
+}

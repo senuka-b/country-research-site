@@ -58,29 +58,85 @@ function createMoreInfoModal(value, name=false, full_name=false, code=false, lan
         let country = data[0];
 
         modalHTML.innerHTML = `
-        <div class=" modal-dialog modal-fullscreen modal-dialog-scrollable" >
+        <div class=" modal-dialog modal-fullscreen modal-dialog-scrollable "  >
     
-            <div class="modal-content">
+            <div class="modal-content modal-bg overlay" style="--url: url('${country.flags.png}');" >
                 <div class="modal-header">
-                    <h1 class="modal-title">${country.name.common}</h1>
+                    <h1 class="modal-title fw-bold text-white">${country.name.common}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body overlay " style="color: white;" >
+
+                    <div>
+                    
                     <div class="row text-center">
 
                         <img src="${country.flags.png}" class="w-25" >
                     </div>
 
                     <h4 class="pt-5">
-                        <b>Region</b> : ${country.region}
-
+                        <b>Name</b>
                     </h4>
+                    <ul>
+                        <li><p class="lead">Common : </p>${country.name.common}</li>
+                        <li><p class="lead">Official : </p>${country.name.official}</li>
+                        <li><p class="lead">Native : </p>${Object.values(country.name.nativeName)[0].official}</li>
+
+                    </ul>
+
+                    <h4 class="pt-5">
+                        <b>Independent</b> : ${country.independent ? "yes" : "no"}
+                    </h4>
+
+                    <h4 class="pt-5">
+                        <b>UN Member</b> : ${country.unMember ? "yes" : "no"}
+                    </h4>
+
+                    <h4 class="pt-5">
+                        <b>Currencies</b> : ${Object.keys(country.currencies).toString()}
+                    </h4>
+                    
+                    <h4 class="pt-5">
+                        <b>Capital</b> : ${country.capital.toString()}
+                    </h4>
+
+                    <h4 class="pt-5">
+                        <b>Region</b> : ${country.region}
+                    </h4>
+                    
+                    <h4 class="pt-5">
+                        <b>Languages</b> : ${Object.values(country.languages).toString()}
+                    </h4>
+
+                    <h4 class="pt-5">
+                        <b>Latitude & Longitude</b>
+                    </h4>
+
+                    <ul>
+                        <li><p class="lead">Latitude : </p>${country.latlng[0]}</li>
+                        <li><p class="lead">Longitude : </p>${country.latlng[1]}</li>
+
+                    </ul>
+
+                    <h4 class="pt-5">
+                        <b>Area</b> : ${country.area} km<sup>2</sup>
+                    </h4>
+
+                    <h4 class="pt-5">
+                        <b>Population</b> : ${country.population}
+                    </h4>
+
+                    <h4 class="pt-5">
+                        <b>Timezones</b> : ${country.timezones.toString()}
+                    </h4>
+
+                    </div>
 
 
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer overlay">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">See Location ↗️</button>
+                    <a href="${country.maps.googleMaps}" target="_blank" class="btn btn-primary">See Location ↗️</a>
                 </div>
                 </div>
 
@@ -107,10 +163,10 @@ let values = {
 function search() {
     let searchInput = document.getElementById("searchTextInput");
 
-    console.log(Object.values(values));
-    
+    // console.log(Object.values(values));
 
     createMoreInfoModal(searchInput.value, ...Object.values(values));
+    searchInput.value = "";
 
 }
 
